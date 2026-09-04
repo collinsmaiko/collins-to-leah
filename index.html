@@ -1,1 +1,772 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For the One I Love</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <style>
+        /* ─── Reset & Base ────────────────────────────────────────────── */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #fcf8f3;
+            --cream-dark: #f5efe8;
+            --blush: #d9a3af;
+            --rose: #b56a7a;
+            --burgundy: #8a3b4a;
+            --charcoal: #2d2a28;
+            --charcoal-soft: #4a403c;
+            --shadow-sm: 0 4px 20px rgba(44, 37, 34, 0.06);
+            --shadow-md: 0 12px 40px rgba(44, 37, 34, 0.10);
+            --shadow-lg: 0 24px 64px rgba(44, 37, 34, 0.14);
+            --radius: 16px;
+            --transition: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ─── Reduced motion ──────────────────────────────────────────── */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+            .fade-in {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+            }
+        }
+
+        /* ─── Fade-in utility ────────────────────────────────────────── */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── Container ───────────────────────────────────────────────── */
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+        @media (max-width: 640px) {
+            .container {
+                padding: 0 20px;
+            }
+        }
+
+        /* ─── Section spacing ────────────────────────────────────────── */
+        section {
+            padding: 100px 0;
+        }
+        @media (max-width: 768px) {
+            section {
+                padding: 70px 0;
+            }
+        }
+
+        /* ─── Typography helpers ─────────────────────────────────────── */
+        .serif {
+            font-family: var(--font-serif);
+        }
+        .sans {
+            font-family: var(--font-sans);
+        }
+
+        /* ─── Buttons ─────────────────────────────────────────────────── */
+        .btn {
+            display: inline-block;
+            background: var(--burgundy);
+            color: #fff;
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            padding: 16px 48px;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+            box-shadow: 0 6px 24px rgba(138, 59, 74, 0.30);
+        }
+        .btn:hover {
+            background: var(--rose);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 36px rgba(138, 59, 74, 0.35);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .btn--outline {
+            background: transparent;
+            color: var(--charcoal);
+            box-shadow: 0 0 0 2px var(--burgundy) inset;
+            background: transparent;
+        }
+        .btn--outline:hover {
+            background: var(--burgundy);
+            color: #fff;
+            box-shadow: 0 6px 24px rgba(138, 59, 74, 0.30);
+        }
+
+        /* ─── 1. Hero ─────────────────────────────────────────────────── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=1600&q=80') center/cover no-repeat;
+            padding: 40px 0;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(252, 248, 243, 0.65);
+            backdrop-filter: blur(2px);
+            z-index: 1;
+        }
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero__eyebrow {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--burgundy);
+            font-weight: 500;
+            margin-bottom: 18px;
+            opacity: 0.8;
+        }
+
+        .hero__heading {
+            font-family: var(--font-serif);
+            font-size: clamp(2.6rem, 10vw, 4.8rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--charcoal);
+            margin-bottom: 18px;
+            letter-spacing: -0.02em;
+        }
+        .hero__heading em {
+            font-style: italic;
+            font-weight: 400;
+            color: var(--burgundy);
+        }
+
+        .hero__text {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--charcoal-soft);
+            max-width: 520px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
+        }
+
+        .hero__btn {
+            /* same as .btn but we keep for specificity */
+        }
+
+        /* ─── 2. Love section ────────────────────────────────────────── */
+        .love {
+            background: var(--cream-dark);
+            border-top: 1px solid rgba(138, 59, 74, 0.06);
+            border-bottom: 1px solid rgba(138, 59, 74, 0.06);
+        }
+        .love__grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .love__grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+        }
+        .love__content {
+            padding: 0 8px;
+        }
+        .love__title {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 600;
+            line-height: 1.2;
+            color: var(--charcoal);
+            margin-bottom: 16px;
+        }
+        .love__title span {
+            color: var(--burgundy);
+            font-style: italic;
+        }
+        .love__text {
+            font-size: 1.05rem;
+            font-weight: 300;
+            color: var(--charcoal-soft);
+            line-height: 1.8;
+            max-width: 460px;
+        }
+        @media (max-width: 768px) {
+            .love__text {
+                max-width: 100%;
+            }
+        }
+        .love__image {
+            width: 100%;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            transition: transform var(--transition), box-shadow var(--transition);
+            object-fit: cover;
+            height: 400px;
+            background: #ddd;
+        }
+        .love__image:hover {
+            transform: scale(1.01);
+            box-shadow: var(--shadow-lg);
+        }
+        @media (max-width: 768px) {
+            .love__image {
+                height: 320px;
+            }
+        }
+
+        /* ─── 3. Gallery ──────────────────────────────────────────────── */
+        .gallery {
+            background: var(--cream);
+        }
+        .gallery__title {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 12px;
+            color: var(--charcoal);
+        }
+        .gallery__sub {
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--charcoal-soft);
+            opacity: 0.7;
+            margin-bottom: 48px;
+        }
+
+        .gallery__grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            grid-auto-rows: auto;
+        }
+        .gallery__item {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: transform var(--transition), box-shadow var(--transition);
+            position: relative;
+            background: #eee;
+        }
+        .gallery__item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        .gallery__item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .gallery__item--tall {
+            grid-row: span 2;
+        }
+        .gallery__item--wide {
+            grid-column: span 2;
+        }
+        .gallery__item--small {
+            grid-column: span 1;
+        }
+
+        .gallery__caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 16px 16px;
+            background: linear-gradient(transparent, rgba(44, 37, 34, 0.55));
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 300;
+            letter-spacing: 0.02em;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            font-family: var(--font-sans);
+        }
+        .gallery__item:hover .gallery__caption {
+            opacity: 1;
+        }
+
+        /* Responsive gallery */
+        @media (max-width: 768px) {
+            .gallery__grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .gallery__item--wide {
+                grid-column: span 2;
+            }
+            .gallery__item--tall {
+                grid-row: span 1;
+            }
+        }
+        @media (max-width: 480px) {
+            .gallery__grid {
+                grid-template-columns: 1fr;
+            }
+            .gallery__item--wide {
+                grid-column: span 1;
+            }
+        }
+
+        /* ─── 4. Love Letter ──────────────────────────────────────────── */
+        .letter-section {
+            background: var(--cream-dark);
+            border-top: 1px solid rgba(138, 59, 74, 0.06);
+            border-bottom: 1px solid rgba(138, 59, 74, 0.06);
+        }
+        .letter-card {
+            background: #ffffff;
+            padding: 60px 56px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            max-width: 720px;
+            margin: 0 auto;
+            border: 1px solid rgba(138, 59, 74, 0.06);
+            transition: box-shadow var(--transition);
+        }
+        .letter-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        @media (max-width: 640px) {
+            .letter-card {
+                padding: 36px 24px;
+            }
+        }
+
+        .letter-card__title {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-align: center;
+            color: var(--charcoal);
+            margin-bottom: 28px;
+        }
+        .letter-card__title::after {
+            content: '';
+            display: block;
+            width: 48px;
+            height: 2px;
+            background: var(--burgundy);
+            margin: 12px auto 0;
+            opacity: 0.3;
+        }
+        .letter-card__body {
+            font-family: var(--font-serif);
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--charcoal-soft);
+        }
+        .letter-card__body p {
+            margin-bottom: 1.2rem;
+        }
+        .letter-card__body p:last-child {
+            margin-bottom: 0;
+        }
+        .letter-card__signature {
+            margin-top: 2rem;
+            font-style: italic;
+            font-weight: 400;
+            color: var(--burgundy);
+            text-align: right;
+        }
+
+        /* ─── 5. Forever section ────────────────────────────────────── */
+        .forever {
+            background: var(--cream);
+            text-align: center;
+        }
+        .forever__title {
+            font-family: var(--font-serif);
+            font-size: clamp(2.4rem, 6vw, 3.6rem);
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 16px;
+        }
+        .forever__text {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--charcoal-soft);
+            max-width: 560px;
+            margin: 0 auto 48px;
+            line-height: 1.7;
+        }
+        .forever__words {
+            display: flex;
+            justify-content: center;
+            gap: 64px;
+            flex-wrap: wrap;
+            font-family: var(--font-serif);
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 400;
+            color: var(--burgundy);
+            letter-spacing: 0.02em;
+        }
+        .forever__words span {
+            opacity: 0.85;
+        }
+        @media (max-width: 480px) {
+            .forever__words {
+                gap: 32px;
+                font-size: 1.6rem;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* ─── 6. Final Hero ───────────────────────────────────────────── */
+        .final-hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=1600&q=80') center/cover no-repeat;
+            padding: 40px 0;
+        }
+        .final-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(44, 37, 34, 0.55);
+            z-index: 1;
+        }
+        .final-hero .container {
+            position: relative;
+            z-index: 2;
+        }
+        .final-hero__heading {
+            font-family: var(--font-serif);
+            font-size: clamp(2.8rem, 10vw, 5rem);
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+        .final-hero__text {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 440px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+        .final-hero .btn {
+            background: #fff;
+            color: var(--charcoal);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.20);
+        }
+        .final-hero .btn:hover {
+            background: var(--blush);
+            color: #fff;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.30);
+        }
+        .final-hero__heart {
+            display: inline-block;
+            font-size: 1.6rem;
+            color: var(--blush);
+            margin-top: 24px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.15);
+                opacity: 1;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .final-hero__heart {
+                animation: none;
+            }
+        }
+
+        /* ─── Footer ──────────────────────────────────────────────────── */
+        .footer {
+            background: var(--charcoal);
+            padding: 32px 0 28px;
+            text-align: center;
+        }
+        .footer__text {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.30);
+            letter-spacing: 0.04em;
+        }
+        .footer__text span {
+            color: rgba(255, 255, 255, 0.20);
+        }
+
+        /* ─── Responsive tweaks ──────────────────────────────────────── */
+        @media (max-width: 640px) {
+            .hero__heading {
+                font-size: 2.2rem;
+            }
+            .hero__text {
+                font-size: 1rem;
+            }
+            .love__content {
+                padding: 0;
+            }
+            .forever__words {
+                font-size: 2rem;
+            }
+            .final-hero__heading {
+                font-size: 2.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ HERO ═══ -->
+    <section class="hero" id="top">
+        <div class="container">
+            <div class="fade-in">
+                <div class="hero__eyebrow">My Love</div>
+                <h1 class="hero__heading">You Make My World <em>Beautiful.</em></h1>
+                <p class="hero__text">
+                    Some people come into your life and quietly become your favorite part of it.
+                </p>
+                <a href="#love" class="btn hero__btn">A Little Something For You</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SECTION 02 — LOVE ═══ -->
+    <section class="love" id="love">
+        <div class="container">
+            <div class="love__grid">
+                <div class="love__content fade-in">
+                    <h2 class="love__title">For The One <span>I Love</span></h2>
+                    <p class="love__text">
+                        There are a thousand ways I could tell you how much you mean to me,
+                        but somehow none of them ever feel like enough.
+                    </p>
+                </div>
+                <img
+                class="love__image fade-in"
+                src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&q=80"
+                alt="A beautiful moment"
+                loading="lazy"
+                />
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SECTION 03 — GALLERY ═══ -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <h2 class="gallery__title fade-in">Beautiful Moments</h2>
+            <p class="gallery__sub fade-in">A few of the memories I hold close</p>
+
+            <div class="gallery__grid">
+                <!-- Item 1: wide -->
+                <div class="gallery__item gallery__item--wide fade-in">
+                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800&q=80" alt="Sunset" loading="lazy" />
+                    <div class="gallery__caption">One of my favorite memories.</div>
+                </div>
+                <!-- Item 2: tall -->
+                <div class="gallery__item gallery__item--tall fade-in">
+                    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&q=80" alt="Couple" loading="lazy" />
+                    <div class="gallery__caption">A moment I'll always keep.</div>
+                </div>
+                <!-- Item 3 -->
+                <div class="gallery__item fade-in">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80" alt="Beach" loading="lazy" />
+                    <div class="gallery__caption">Just you being you.</div>
+                </div>
+                <!-- Item 4 -->
+                <div class="gallery__item fade-in">
+                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&q=80" alt="Nature" loading="lazy" />
+                    <div class="gallery__caption">A memory worth holding onto.</div>
+                </div>
+                <!-- Item 5: wide -->
+                <div class="gallery__item gallery__item--wide fade-in">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80" alt="Couple sunset" loading="lazy" />
+                    <div class="gallery__caption">Every moment with you is precious.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SECTION 04 — LOVE LETTER ═══ -->
+    <section class="letter-section" id="letter">
+        <div class="container">
+            <div class="letter-card fade-in">
+                <h2 class="letter-card__title">A Few Words From My Heart</h2>
+                <div class="letter-card__body">
+                    <p>My love,</p>
+                    <p>
+                        If I could give you one thing in this world, I would give you
+                        the ability to see yourself through my eyes.
+                    </p>
+                    <p>
+                        Maybe then you'd understand just how special you are to me.
+                    </p>
+                    <p>
+                        Thank you for the laughter, the conversations, the memories,
+                        and all the little moments that somehow mean so much.
+                    </p>
+                    <p>
+                        You have a way of making ordinary days feel extraordinary.
+                    </p>
+                    <p>
+                        And if I had to choose you all over again, I would.
+                        <br />Every single time.
+                    </p>
+                    <div class="letter-card__signature">With all my heart,<br />Forever yours.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SECTION 05 — FOREVER ═══ -->
+    <section class="forever" id="forever">
+        <div class="container">
+            <h2 class="forever__title fade-in">Here's To Us.</h2>
+            <p class="forever__text fade-in">
+                To more laughter. More adventures. More memories.
+                More ordinary days that somehow become our favorite ones.
+            </p>
+            <div class="forever__words fade-in">
+                <span>Love.</span>
+                <span>Laughter.</span>
+                <span>Forever.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SECTION 06 — FINAL HERO ═══ -->
+    <section class="final-hero" id="final">
+        <div class="container">
+            <div class="fade-in">
+                <h2 class="final-hero__heading">I Love You.</h2>
+                <p class="final-hero__text">
+                    And I'll never get tired of reminding you.
+                </p>
+                <a href="#top" class="btn">Forever &amp; Always</a>
+                <div class="final-hero__heart" aria-hidden="true">♥</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer__text">
+                Made with love, for someone very special.
+                <span>— <span id="year"></span></span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- ═══ SCRIPTS ═══ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // Current year
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // Intersection Observer for fade-in
+            const fadeElements = document.querySelectorAll('.fade-in');
+
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -20px 0px'
+                });
+
+                fadeElements.forEach(el => observer.observe(el));
+
+                // Also reveal any already visible on load
+                setTimeout(() => {
+                    fadeElements.forEach(el => {
+                        const rect = el.getBoundingClientRect();
+                        if (rect.top < window.innerHeight - 60) {
+                            el.classList.add('visible');
+                            observer.unobserve(el);
+                        }
+                    });
+                }, 150);
+            } else {
+                // Fallback
+                fadeElements.forEach(el => el.classList.add('visible'));
+            }
+
+            // Smooth scroll for CTA buttons (optional, but already native)
+            // No extra needed, but ensure anchor links work smoothly
+        })();
+    </script>
+
+</body>
+</html>
